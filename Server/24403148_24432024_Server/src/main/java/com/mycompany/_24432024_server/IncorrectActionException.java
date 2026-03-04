@@ -8,6 +8,9 @@ package com.mycompany._24432024_server;
  *
  * @author fabia
  */
-public class IncorrectActionException {
+public class IncorrectActionException extends Exception {
+    public IncorrectActionException(String message) {
+        super(message);
+    }
     
 }
