@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.projectmidterm;
+package com.mycompany.projectmidterm; //test for github
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
