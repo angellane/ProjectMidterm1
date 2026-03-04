@@ -50,7 +50,7 @@ public class ProjectMidterm extends Application {
         
         statusLabel = new Label("Connected");
         logArea = new TextArea();
-        
+        //somethinhg
         
         table = new TableView<>();
         TableColumn<Lecture, String> dateCol = new TableColumn<>("Date");
