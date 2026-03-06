@@ -126,7 +126,7 @@ public class ClientView {
         int count;
         try { count = Integer.parseInt(parts[1]); } catch (NumberFormatException e) { return; }
         for (int i = 0; i < count && (i + 2) < parts.length; i++) {
-            String[] fields = parts[i + 2].split("~");
+            String[] fields = parts[i + 2].split("|");
             if (fields.length >= 4) scheduleData.add(fields);
         }
     }
