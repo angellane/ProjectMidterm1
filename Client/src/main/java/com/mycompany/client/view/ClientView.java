@@ -87,6 +87,8 @@ public class ClientView {
                 new Label("Time:"), timeSlot,
                 new Label("Room:"), roomNum);
 
+        lectureInputPanel.setVisible(false);
+        lectureInputPanel.setManaged(false);
         
         scheduleTable = new TableView<>(scheduleData);
         String[] columns = {"Module", "Date", "Time", "Room"};
@@ -101,7 +103,7 @@ public class ClientView {
         grid.setHgap(8);
         grid.setVgap(8);
         grid.setPadding(new Insets(8));
-        grid.add(new Label("Action:"), 0, 0); grid.add(actionBox,       1, 0);
+        grid.add(new Label("Action:"), 0, 0); grid.add(actionBox,1, 0);
         grid.add(lectureInputPanel,    0, 1, 2, 1);
         grid.add(connectBtn,           0, 2); grid.add(sendBtn,  1, 2);
         grid.add(clearBtn,             2, 2); grid.add(stopBtn,  3, 2);
