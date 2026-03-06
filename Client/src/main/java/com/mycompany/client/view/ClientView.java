@@ -104,9 +104,9 @@ public class ClientView {
         grid.setVgap(8);
         grid.setPadding(new Insets(8));
         grid.add(new Label("Action:"), 0, 0); grid.add(actionBox,1, 0);
-        grid.add(lectureInputPanel,    0, 1, 2, 1);
-        grid.add(connectBtn,           0, 2); grid.add(sendBtn,  1, 2);
-        grid.add(clearBtn,             2, 2); grid.add(stopBtn,  3, 2);
+        grid.add(lectureInputPanel,0, 1, 2, 1);
+        grid.add(connectBtn,0, 2); grid.add(sendBtn, 1, 2);
+        grid.add(clearBtn,2, 2); grid.add(stopBtn,  3, 2);
 
         BorderPane border = new BorderPane();
         border.setTop(grid);
@@ -135,15 +135,15 @@ public class ClientView {
 }
     }
     public void clearSchedule() { scheduleData.clear(); }
-    public void setStatus(String msg)      { statusLabel.setText("Status: " + msg); }
-    public void appendResponse(String msg) { readOnly.appendText(msg + "\n"); }
-    public void clearResponse()            { readOnly.clear(); }
+    public void setStatus(String msg){ statusLabel.setText("Status: " + msg); }
+    public void appendResponse(String msg){ readOnly.appendText(msg + "\n"); }
+    public void clearResponse(){ readOnly.clear(); }
 
-    public String getSelectedAction() { return actionBox.getValue(); }
-    public String getSelectedModule() { return moduleNum.getText().trim(); }
-    public String getSelectedTime()   { return timeSlot.getValue(); }
-    public String getRoomNumber()     { return roomNum.getText().trim(); }
-    public String getSelectedDate()   { return datePicker.getValue() != null ? datePicker.getValue().toString() : ""; }
+    public String getSelectedAction(){ return actionBox.getValue(); }
+    public String getSelectedModule(){ return moduleNum.getText().trim(); }
+    public String getSelectedTime(){ return timeSlot.getValue(); }
+    public String getRoomNumber(){return roomNum.getText().trim(); }
+    public String getSelectedDate(){ return datePicker.getValue() != null ? datePicker.getValue().toString() : ""; }
 
     public void showLectureInputPanel(boolean show) {
         lectureInputPanel.setVisible(show);
