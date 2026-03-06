@@ -125,12 +125,15 @@ public class ClientView {
         String[] parts = response.split("\\|");
         int count;
         try { count = Integer.parseInt(parts[1]); } catch (NumberFormatException e) { return; }
-        for (int i = 0; i < count && (i + 2) < parts.length; i++) {
-            String[] fields = parts[i + 2].split("|");
-            if (fields.length >= 4) scheduleData.add(fields);
-        }
+        for (int i = 0; i < count; i++) {
+    int base = 2 + i * 4;
+    if (base + 3 < parts.length) {
+        String[] row = { parts[base], parts[base+1], parts[base+2], parts[base+3] };
+        scheduleData.add(row);
     }
-
+}
+    }
+    public void clearSchedule() { scheduleData.clear(); }
     public void setStatus(String msg)      { statusLabel.setText("Status: " + msg); }
     public void appendResponse(String msg) { readOnly.appendText(msg + "\n"); }
     public void clearResponse()            { readOnly.clear(); }

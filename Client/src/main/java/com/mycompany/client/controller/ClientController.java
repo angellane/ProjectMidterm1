@@ -99,6 +99,6 @@ public class ClientController {
             }
         });
 
-        view.clearBtn.setOnAction(e -> view.clearResponse());
+        view.clearBtn.setOnAction(e -> view.clearSchedule());
     }
 }
