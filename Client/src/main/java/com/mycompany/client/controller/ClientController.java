@@ -34,6 +34,7 @@ public class ClientController {
         if (response.startsWith("EXCEPTION")) {
             view.appendResponse("[!] IncorrectActionException thrown on server.");
         }
+        
     }
 
     public ClientController(ClientView view, ClientModel model) {

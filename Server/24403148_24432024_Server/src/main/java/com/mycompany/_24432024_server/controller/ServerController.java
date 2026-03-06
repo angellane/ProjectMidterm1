@@ -40,9 +40,7 @@ public class ServerController {
         }
     }
     private String handleAdd(String[] parts) {
-        if (parts.length < 5) {
-            return "ERROR: Insufficient parameters for ADD. Expected: ADD|module|date|time|room";
-        }
+        
         String module = parts[1].trim();
         String date   = parts[2].trim();
         String time   = parts[3].trim();
@@ -50,9 +48,7 @@ public class ServerController {
         return model.addLecture(module, date, time, room);
     }
     private String handleRemove(String[] parts) {
-        if (parts.length < 5) {
-            return "ERROR: Insufficient parameters for REMOVE. Expected: REMOVE|module|date|time|room";
-        }
+        
         String module = parts[1].trim();
         String date   = parts[2].trim();
         String time   = parts[3].trim();
