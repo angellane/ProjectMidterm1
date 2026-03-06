@@ -14,14 +14,15 @@ import javafx.stage.Stage;
  *
  * @author b4zel
  */
-class ClientMain extends Application {
+public class ClientMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
         ClientView       view       = new ClientView(primaryStage);
+        view.start();
         ClientModel      model      = new ClientModel();
         ClientController controller = new ClientController(view, model);
-        view.start();
+        
     }
 
     public static void main(String[] args) {
