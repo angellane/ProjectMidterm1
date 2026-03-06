@@ -20,7 +20,7 @@ public class ClientController {
     private void handleResponse(String action, String response) {
         if (response == null) { view.appendResponse("[Error] No response from server."); return; }
         view.appendResponse("[Received] " + response);
-        if (action.equals("DISPLAY") && response.startsWith("SCHEDULE|")) {
+        if (action.equals("DISPLAY") && response.startsWith("SCHEDULE| ")) {
             view.updateSchedule(response);
             view.appendResponse("[System] Timetable updated.");
         }
@@ -68,10 +68,10 @@ public class ClientController {
             }
             String message;
             switch (action) {
-                case "ADD":     message = "ADD|"    + view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
-                case "REMOVE":  message = "REMOVE|" + view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
-                case "DISPLAY": message = "DISPLAY"; break;
-                default:        message = "UNKNOWN_ACTION"; break;
+                case "ADD ": message = "ADD| "+ view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
+                case "REMOVE ": message = "REMOVE| " + view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
+                case "DISPLAY ": message = "DISPLAY " ; break;
+                default: message = "UNKNOWN_ACTION "; break;
             }
             view.appendResponse("[Sent] " + message);
             try {
