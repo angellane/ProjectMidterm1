@@ -4,15 +4,16 @@
  */
 package com.mycompany._24432024_server.controller;
 import com.mycompany._24432024_server.IncorrectActionException;
+import com.mycompany._24432024_server.model.ServerModel;
 
 /**
  *
  * @author fabia
  */
 public class ServerController {
-    private final ScheduleModel model;
+    private final ServerModel model;
     public ServerController() {
-        this.model = new ScheduleModel();
+        this.model = new ServerModel();
     }
     public String processRequest(String message) {
         if (message == null || message.trim().isEmpty()) {
