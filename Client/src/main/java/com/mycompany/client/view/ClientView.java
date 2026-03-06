@@ -104,9 +104,9 @@ public class ClientView {
         grid.setVgap(8);
         grid.setPadding(new Insets(8));
         grid.add(new Label("Action:"), 0, 0); grid.add(actionBox,1, 0);
-        grid.add(lectureInputPanel,    0, 1, 2, 1);
-        grid.add(connectBtn,           0, 2); grid.add(sendBtn,  1, 2);
-        grid.add(clearBtn,             2, 2); grid.add(stopBtn,  3, 2);
+        grid.add(lectureInputPanel,0, 1, 2, 1);
+        grid.add(connectBtn,0, 2); grid.add(sendBtn, 1, 2);
+        grid.add(clearBtn,2, 2); grid.add(stopBtn,  3, 2);
 
         BorderPane border = new BorderPane();
         border.setTop(grid);
