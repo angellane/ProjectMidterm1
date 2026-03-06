@@ -12,7 +12,7 @@ import java.io.*;
  */
 public class ServerMain {
     public static void main(String[] args) {
-        try (ServerSocket servSock = new ServerSocket(1234)) {
+        try (ServerSocket servSock = new ServerSocket(5000)) {
             System.out.println("Server Started");
             
            while (true) {
@@ -23,6 +23,8 @@ public class ServerMain {
                out.println("Awaiting data.");
                String input = in.readLine();
                System.out.println("Received: " + input);
+               String response = com.mycompany._24432024_server.controller.ServerController.processRequest(input);
+               out.println(response);
                        
                link.close();
            }

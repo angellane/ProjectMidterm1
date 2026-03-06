@@ -14,7 +14,7 @@ public class ClientModel {
     
         
     private static final String HOST = "localhost";
-    private static final int PORT = 5000;
+    private static final int PORT = 1234;
 
     private Socket socket;
     private BufferedReader in;
