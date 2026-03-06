@@ -4,10 +4,27 @@
  */
 package com.mycompany.client;
 
+import com.mycompany.client.controller.ClientController;
+import com.mycompany.client.model.ClientModel;
+import com.mycompany.client.view.ClientView;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 /**
  *
  * @author b4zel
  */
-public class ClientMain {
-    
+class ClientMain extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        ClientView       view       = new ClientView(primaryStage);
+        ClientModel      model      = new ClientModel();
+        ClientController controller = new ClientController(view, model);
+        view.start();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
