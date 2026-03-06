@@ -18,12 +18,19 @@ public class ClientController {
     private final ClientModel model;
 
     private void handleResponse(String action, String response) {
-        if (response == null) { view.appendResponse("[Error] No response from server."); return; }
-        view.appendResponse("[Received] " + response);
-        if (action.equals("DISPLAY") && response.startsWith("SCHEDULE| ")) {
+       if (response == null) { view.appendResponse("[Error] No response from server."); return; }
+        if (!response.startsWith("SCHEDULE|")) view.appendResponse("[Received] " + response);
+        if (action.equals("DISPLAY") && response.startsWith("SCHEDULE|")) {
             view.updateSchedule(response);
-            view.appendResponse("[System] Timetable updated.");
-        }
+            String[] parts = response.split("\\|");
+        int count = Integer.parseInt(parts[1]);
+            view.appendResponse("[Display] " + count + " lecture(s) scheduled:");
+        for (int i = 0; i < count; i++) {
+        int base = 2 + i * 5;
+        if (base + 3 < parts.length)
+            view.appendResponse("  " + parts[base] + " | " + parts[base+1] + " | " + parts[base+2] + " | " + parts[base+3]);
+    }
+}
         if (response.startsWith("TERMINATE")) {
             view.setStatus("Connection terminated by server.");
             view.sendBtn.setDisable(true);
