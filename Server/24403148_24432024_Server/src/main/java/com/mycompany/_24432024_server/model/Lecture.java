@@ -36,7 +36,8 @@ public class Lecture {
         return course + "|" + module + "|" + date + "|" + time + "|" + roomNumber;
     }
     public String serialize() {
-        return module + "~" + date + "~" + time + "~" + roomNumber + "~" + course;
+        return module + "|" + date + "|" + time + "|" + roomNumber + "|" + course;
+        
     }
     public static Lecture deserialize(String data) {
         String[] parts = data.split("~");
