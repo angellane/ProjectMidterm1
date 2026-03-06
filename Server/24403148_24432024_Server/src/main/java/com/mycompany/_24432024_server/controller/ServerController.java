@@ -59,8 +59,8 @@ public class ServerController {
         return model.getScheduleSerialized();
     }
     private String handleStop() {
-        System.out.println("STOP received. Sending TERMINATE and closing connection.");
-        return "TERMINATE: Connection closed by server. Goodbye!";
+        System.out.println("STOP received. Closing Connection");
+        return "Goodbye!";
     }
 }
     
