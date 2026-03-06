@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <javafx.version>21</javafx.version>
-        <exec.mainClass>com.mycompany.projectmidterm.ProjectMidterm</exec.mainClass>
+<exec.mainClass>com.mycompany.client.ClientMain</exec.mainClass>  
     </properties>
 
     <dependencies>
