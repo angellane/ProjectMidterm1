@@ -68,9 +68,9 @@ public class ClientController {
             }
             String message;
             switch (action) {
-                case "ADD ": message = "ADD| "+ view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
-                case "REMOVE ": message = "REMOVE| " + view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
-                case "DISPLAY ": message = "DISPLAY " ; break;
+                case "ADD": message = "ADD| "+ view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
+                case "REMOVE": message = "REMOVE| " + view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
+                case "DISPLAY": message = "DISPLAY " ; break;
                 default: message = "UNKNOWN_ACTION "; break;
             }
             view.appendResponse("[Sent] " + message);
