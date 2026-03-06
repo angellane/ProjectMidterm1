@@ -134,15 +134,15 @@ public class ClientView {
 }
     }
     public void clearSchedule() { scheduleData.clear(); }
-    public void setStatus(String msg)      { statusLabel.setText("Status: " + msg); }
-    public void appendResponse(String msg) { readOnly.appendText(msg + "\n"); }
-    public void clearResponse()            { readOnly.clear(); }
+    public void setStatus(String msg){ statusLabel.setText("Status: " + msg); }
+    public void appendResponse(String msg){ readOnly.appendText(msg + "\n"); }
+    public void clearResponse(){ readOnly.clear(); }
 
-    public String getSelectedAction() { return actionBox.getValue(); }
-    public String getSelectedModule() { return moduleNum.getText().trim(); }
-    public String getSelectedTime()   { return timeSlot.getValue(); }
-    public String getRoomNumber()     { return roomNum.getText().trim(); }
-    public String getSelectedDate()   { return datePicker.getValue() != null ? datePicker.getValue().toString() : ""; }
+    public String getSelectedAction(){ return actionBox.getValue(); }
+    public String getSelectedModule(){ return moduleNum.getText().trim(); }
+    public String getSelectedTime(){ return timeSlot.getValue(); }
+    public String getRoomNumber(){return roomNum.getText().trim(); }
+    public String getSelectedDate(){ return datePicker.getValue() != null ? datePicker.getValue().toString() : ""; }
 
     public void showLectureInputPanel(boolean show) {
         lectureInputPanel.setVisible(show);
