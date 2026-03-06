@@ -18,9 +18,9 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ClientView       view       = new ClientView(primaryStage);
+        ClientView view = new ClientView(primaryStage);
         view.start();
-        ClientModel      model      = new ClientModel();
+        ClientModel model = new ClientModel();
         ClientController controller = new ClientController(view, model);
         
     }
