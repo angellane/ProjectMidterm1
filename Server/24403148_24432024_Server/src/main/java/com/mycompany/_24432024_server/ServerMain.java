@@ -15,7 +15,7 @@ public class ServerMain {
 
     public static void main(String[] args) {
         ServerController controller = new ServerController();
-        try (ServerSocket servSock = new ServerSocket(5000)) {
+        try (ServerSocket servSock = new ServerSocket(1234)) {
             System.out.println("Server Started");
             while (true) {
                 Socket link = servSock.accept();
