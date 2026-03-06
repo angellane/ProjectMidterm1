@@ -47,7 +47,7 @@ public class ClientController {
         view.connectBtn.setOnAction(e -> {
             try {
                 model.connect();
-                view.setStatus("Connected to server on localhost:5000");
+                view.setStatus("Connected to server on localhost:1234");
                 view.appendResponse("[System] Connected to server successfully.");
                 view.sendBtn.setDisable(false);
                 view.stopBtn.setDisable(false);

@@ -126,9 +126,10 @@ public class ClientView {
         int count;
         try { count = Integer.parseInt(parts[1]); } catch (NumberFormatException e) { return; }
         for (int i = 0; i < count; i++) {
-    int base = 2 + i * 4;
-    if (base + 3 < parts.length) {
-        String[] row = { parts[base], parts[base+1], parts[base+2], parts[base+3] };
+    int base = 2 + i * 5;
+    if (base + 3 <= parts.length) {
+        String[] row = { parts[base], parts[base+1], parts[base+2], parts[base+3], };
+    
         scheduleData.add(row);
     }
 }
