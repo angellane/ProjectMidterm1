@@ -70,8 +70,18 @@ public class ClientController {
             if (!model.isConnected()) { view.appendResponse("[WARNING] Not connected."); return; }
             String action = view.getSelectedAction();
             if (!action.equals("DISPLAY") && !action.equals("OTHER")) {
-                if (view.getRoomNumber().isEmpty())     { view.appendResponse("[WARNING] Please enter a room number."); return; }
-                if (view.getSelectedModule().isEmpty()) { view.appendResponse("[WARNING] Please enter a module name."); return; }
+                if (view.getRoomNumber().isEmpty()){ 
+                    view.appendResponse("[WARNING] Please enter a room number."); 
+                    return; 
+                }
+                if (view.getSelectedModule().isEmpty()) { 
+                    view.appendResponse("[WARNING] Please enter a module name."); 
+                    return; 
+                }
+                if (view.getSelectedTime() == null){ 
+                    view.appendResponse("[WARNING] Please select a time slot."); 
+                    return; 
+                }
             }
             String message;
             switch (action) {
