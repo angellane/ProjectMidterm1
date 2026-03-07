@@ -7,6 +7,8 @@ package com.mycompany.client.controller;
 import com.mycompany.client.model.ClientModel;
 import com.mycompany.client.view.ClientView;
 import java.io.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -70,24 +72,18 @@ public class ClientController {
             if (!model.isConnected()) { view.appendResponse("[WARNING] Not connected."); return; }
             String action = view.getSelectedAction();
             if (!action.equals("DISPLAY") && !action.equals("OTHER")) {
-                if (view.getRoomNumber().isEmpty()){ 
-                    view.appendResponse("[WARNING] Please enter a room number."); 
+                if (view.getRoomNumber().isEmpty() || view.getSelectedModule().isEmpty() || view.getSelectedTime() == null ){ 
+                    view.appendResponse("[WARNING] Please enter fields for Room, Module, and/or Time."); 
+                    alertWarn("Please enter Room, Module and/or Time before sending.");
                     return; 
-                }
-                if (view.getSelectedModule().isEmpty()) { 
-                    view.appendResponse("[WARNING] Please enter a module name."); 
-                    return; 
-                }
-                if (view.getSelectedTime() == null){ 
-                    view.appendResponse("[WARNING] Please select a time slot."); 
-                    return; 
+               
                 }
             }
             String message;
             switch (action) {
                 case "ADD": message = "ADD|"+ view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
                 case "REMOVE": message = "REMOVE|" + view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
-                case "DISPLAY": message = "DISPLAY " ; break;
+                case "DISPLAY": message = "DISPLAY" ; break;
                 default: message = "OTHER"; break;
             }
             view.appendResponse("[Sent] " + message);
@@ -101,7 +97,10 @@ public class ClientController {
         });
 
         view.stopBtn.setOnAction(e -> {
-            if (!model.isConnected()) { view.setStatus("Not connected."); return; }
+            if (!model.isConnected()) { view.setStatus("Not connected.");
+            return;
+            }
+            
             try {
                 String response = model.sendMessage("STOP");
                 view.appendResponse("[Sent] STOP");
@@ -116,7 +115,20 @@ public class ClientController {
                 model.disconnect();
             }
         });
-
         view.clearBtn.setOnAction(e -> view.clearInputs());
     }
+         
+
+        private void alertWarn(String msg) {
+        Alert a = new Alert(Alert.AlertType.WARNING, msg, ButtonType.OK);
+        a.setHeaderText("Validation");
+        a.showAndWait();
+    }
+
+        private void alertInfo(String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
+        a.setHeaderText("Info");
+        a.showAndWait();
+    }
+     
 }

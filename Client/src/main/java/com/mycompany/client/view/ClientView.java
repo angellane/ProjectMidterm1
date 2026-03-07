@@ -126,7 +126,7 @@ public class ClientView {
         
 
         BorderPane border = new BorderPane();
-        Label title = new Label("Timetable Client");
+        Label title = new Label("Lecture Scheduler Client");
         title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         HBox header = new HBox(title);
         header.setPadding(new Insets(10));
@@ -139,7 +139,7 @@ public class ClientView {
         leftPanel.setPrefWidth(300);
         leftPanel.setStyle("-fx-border-color:#dddddd; -fx-border-width: 0 1 0 0");
         border.setLeft(leftPanel);
-        VBox bottomPanel = new VBox(6,new Label("Conversation Log"),readOnly,statusLabel
+        VBox bottomPanel = new VBox(6,new Label("Conversation Log Client-Server"),readOnly,statusLabel
 );
 
     bottomPanel.setPadding(new Insets(12));
