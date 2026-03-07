@@ -60,7 +60,7 @@ public class ServerController {
     }
     private String handleStop() {
         System.out.println("STOP received. Closing Connection");
-        return "Goodbye!";
+        return "TERMINATE";
     }
 }
     
