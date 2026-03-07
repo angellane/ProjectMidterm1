@@ -56,7 +56,7 @@ public class ClientController {
             try {
                 model.connect();
                 view.setStatus("Connected to server on localhost:1234");
-                view.appendResponse("[System] Connected to server successfully.");
+                view.appendResponse("[System] Success: Connected to server! ");
                 view.sendBtn.setDisable(false);
                 view.stopBtn.setDisable(false);
                 view.connectBtn.setDisable(true);
@@ -78,7 +78,7 @@ public class ClientController {
                 case "ADD": message = "ADD| "+ view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
                 case "REMOVE": message = "REMOVE| " + view.getSelectedModule() + " | " + view.getSelectedDate() + " | " + view.getSelectedTime() + " | " + view.getRoomNumber(); break;
                 case "DISPLAY": message = "DISPLAY " ; break;
-                default: message = "UNKNOWN_ACTION "; break;
+                default: message = "OTHER"; break;
             }
             view.appendResponse("[Sent] " + message);
             try {
