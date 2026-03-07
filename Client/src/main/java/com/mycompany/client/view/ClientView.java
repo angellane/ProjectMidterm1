@@ -111,8 +111,9 @@ public class ClientView {
         BorderPane border = new BorderPane();
         border.setTop(grid);
         border.setCenter(scheduleTable);
-        border.setBottom(new VBox(readOnly, statusLabel));
-
+        Label logLabel = new Label("Client <-> Server Log");
+        border.setBottom(new VBox(2, logLabel, readOnly, statusLabel));
+        
         stage.setScene(new Scene(border, 800, 600));
         stage.setTitle("Lecture Scheduler Client");
         stage.show();
@@ -136,7 +137,14 @@ public class ClientView {
     }
     public void clearSchedule() { scheduleData.clear(); }
     public void setStatus(String msg){ statusLabel.setText("Status: " + msg); }
-    public void appendResponse(String msg){ readOnly.appendText(msg + "\n"); }
+    public void appendResponse(String msg) {
+    if (msg.startsWith("[Sent]"))
+        readOnly.appendText(">> " + msg.substring(7) + "\n");
+    else if(msg.startsWith("[Received]")) 
+        readOnly.appendText("<< " + msg.substring(11) + "\n");
+    else  
+        readOnly.appendText(msg + "\n");
+    }
     public void clearResponse(){ readOnly.clear(); }
 
     public String getSelectedAction(){ return actionBox.getValue(); }
