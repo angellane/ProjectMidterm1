@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
 
 /**
  *
@@ -49,8 +51,12 @@ public class ClientView {
     }
 
     public void start() {
+       
+      
+       
         actionBox = new ComboBox<>();
         actionBox.getItems().addAll("ADD", "REMOVE", "DISPLAY", "OTHER");
+        actionBox.setValue("ADD");
 
         datePicker = new DatePicker(LocalDate.now());
         timeSlot = new ComboBox<>();
@@ -79,16 +85,18 @@ public class ClientView {
         readOnly = new TextArea();
         readOnly.setEditable(false);
         readOnly.setWrapText(true);
+        
 
         statusLabel = new Label("Status: Not connected");
 
-        lectureInputPanel = new VBox(4, new Label("Module:"), moduleNum,
+        lectureInputPanel = new VBox(6, new Label("Module:"), moduleNum,
                 new Label("Date:"), datePicker,
                 new Label("Time:"), timeSlot,
                 new Label("Room:"), roomNum);
 
         lectureInputPanel.setVisible(false);
         lectureInputPanel.setManaged(false);
+        showLectureInputPanel(true);
         
         scheduleTable = new TableView<>(scheduleData);
         String[] columns = {"Module", "Date", "Time", "Room"};
@@ -100,21 +108,46 @@ public class ClientView {
         }
 
         GridPane grid = new GridPane();
-        grid.setHgap(8);
-        grid.setVgap(8);
+        grid.setHgap(10);
+        grid.setVgap(10);
         grid.setPadding(new Insets(8));
-        grid.add(new Label("Action:"), 0, 0); grid.add(actionBox,1, 0);
-        grid.add(lectureInputPanel,0, 1, 2, 1);
-        grid.add(connectBtn,0, 2); grid.add(sendBtn, 1, 2);
-        grid.add(clearBtn,2, 2); grid.add(stopBtn,  3, 2);
+        grid.add(new Label("Action:"), 0, 0);
+        grid.add(actionBox, 1, 0);
+
+        grid.add(lectureInputPanel, 0, 1, 2, 1);
+        VBox buttonBox = new VBox(10, connectBtn, sendBtn, clearBtn, stopBtn);
+        buttonBox.setPadding(new Insets(10,0,0,0));
+
+        connectBtn.setMaxWidth(Double.MAX_VALUE);
+        sendBtn.setMaxWidth(Double.MAX_VALUE);
+        clearBtn.setMaxWidth(Double.MAX_VALUE);
+        stopBtn.setMaxWidth(Double.MAX_VALUE);
+        
+        
 
         BorderPane border = new BorderPane();
-        border.setTop(grid);
-        border.setCenter(scheduleTable);
-        Label logLabel = new Label("Client <-> Server Log");
-        border.setBottom(new VBox(2, logLabel, readOnly, statusLabel));
+        Label title = new Label("Timetable Client");
+        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        HBox header = new HBox(title);
+        header.setPadding(new Insets(10));
+        header.setStyle("-fx-background-color:#f2f2f2");
         
-        stage.setScene(new Scene(border, 800, 600));
+        border.setTop(header);
+        border.setCenter(scheduleTable);
+        VBox leftPanel = new VBox(10, new Label("Request Builder"), grid, buttonBox);
+        leftPanel.setPadding(new Insets(12));
+        leftPanel.setPrefWidth(300);
+        leftPanel.setStyle("-fx-border-color:#dddddd; -fx-border-width: 0 1 0 0");
+        border.setLeft(leftPanel);
+        VBox bottomPanel = new VBox(6,new Label("Conversation Log"),readOnly,statusLabel
+);
+
+    bottomPanel.setPadding(new Insets(12));
+    bottomPanel.setStyle("-fx-background-color:#fafafa; -fx-border-color:#dddddd; -fx-border-width:1 0 0 0");
+
+    border.setBottom(bottomPanel);
+        
+        stage.setScene(new Scene(border, 1000, 800));
         stage.setTitle("Lecture Scheduler Client");
         stage.show();
     }
