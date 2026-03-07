@@ -141,8 +141,8 @@ public class ClientView {
         roomNum.clear();
         datePicker.setValue(LocalDate.now());
         timeSlot.setValue(null);
-        actionBox.setValue(null);
-        showLectureInputPanel(false);
+        actionBox.setValue("ADD");
+        showLectureInputPanel(true);
     }
     
     public void setStatus(String msg){ statusLabel.setText("Status: " + msg); }
