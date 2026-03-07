@@ -135,7 +135,16 @@ public class ClientView {
     }
 }
     }
-    public void clearSchedule() { scheduleData.clear(); }
+    
+    public void clearInputs() {
+        moduleNum.clear();
+        roomNum.clear();
+        datePicker.setValue(LocalDate.now());
+        timeSlot.setValue(null);
+        actionBox.setValue(null);
+        showLectureInputPanel(false);
+    }
+    
     public void setStatus(String msg){ statusLabel.setText("Status: " + msg); }
     public void appendResponse(String msg) {
     if (msg.startsWith("[Sent]"))

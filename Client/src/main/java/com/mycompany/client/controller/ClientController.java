@@ -107,6 +107,6 @@ public class ClientController {
             }
         });
 
-        view.clearBtn.setOnAction(e -> view.clearSchedule());
+        view.clearBtn.setOnAction(e -> view.clearInputs());
     }
 }
