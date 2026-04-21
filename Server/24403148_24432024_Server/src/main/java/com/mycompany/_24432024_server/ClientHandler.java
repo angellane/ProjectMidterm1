@@ -13,12 +13,15 @@ import java.net.*;
  * @author b4zel
  */
 public class ClientHandler implements Runnable {
-    private Socket link;
-    private ServerController cntrl;
+    private static int clientCounter = 0;
+    private final int clientNum;
+    private final Socket link;
+    private final ServerController cntrl;
      
     public ClientHandler( Socket link, ServerController cntrl){
         this.link = link;
         this.cntrl = cntrl;
+        this.clientNum = ++clientCounter;
         
     }
     @Override
@@ -32,10 +35,10 @@ public class ClientHandler implements Runnable {
       
       String message;         
       while((message = in.readLine()) != null ){
-      System.out.println("Thread : "+ Thread.currentThread().threadId() + " Recieved "+ message);
+      System.out.println("Client : "+ clientNum + " Recieved "+ message);
      
       String resp = cntrl.processRequest(message);
-      System.out.println("Thread : " + Thread.currentThread().threadId() +" Sending "+ resp);
+      System.out.println("Client : " + clientNum +" Sending "+ resp);
      out.println(resp); 
       if (resp.startsWith("TERMINATE"))  break;
          
@@ -50,7 +53,7 @@ public class ClientHandler implements Runnable {
            e.printStackTrace();
             
        }
-       System.out.println("Thread : " + Thread.currentThread().threadId() + " Client connection closed. ");
+       System.out.println("Client : " + clientNum + " Client connection closed. ");
     }
   } 
 }
