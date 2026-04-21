@@ -5,13 +5,13 @@
 package com.mycompany._24432024_server.controller;
 
 import com.mycompany._24432024_server.model.ServerModel;
-import javafx.concurrent.Task;
+import java.util.concurrent.Callable;
 
 /**
  *
  * @author fabia
  */
-public class EarlyLectureWorker extends Task<String> {
+public class EarlyLectureWorker implements Callable<String> {
 
     private final ServerModel model;
 
@@ -20,10 +20,7 @@ public class EarlyLectureWorker extends Task<String> {
     }
 
     @Override
-    protected String call() {
-        updateMessage("Processing early lectures...");
-        String result = model.processEarlyLectures();
-        updateMessage("Early lectures processing complete.");
-        return result;
-    }
+    public String call() {
+       return model.processEarlyLectures();
+     }
 }

@@ -60,7 +60,7 @@ public class ClientView {
       
        
         actionBox = new ComboBox<>();
-        actionBox.getItems().addAll("ADD", "REMOVE", "DISPLAY", "OTHER");
+        actionBox.getItems().addAll("ADD", "REMOVE", "DISPLAY", "EARLY", "OTHER");
         actionBox.setValue("ADD");
 
         datePicker = new DatePicker(LocalDate.now());
@@ -129,6 +129,8 @@ public class ClientView {
         timetableGrid.setVgap(2);
         timetableGrid.setPadding(new Insets(4));
         buildEmptyGrid();
+        
+        HBox.setHgrow(timetableGrid, Priority.ALWAYS);
         ScrollPane scrollPane = new ScrollPane(timetableGrid);
         scrollPane.setFitToWidth(true);
         Label gridTitle = new Label("Weekly Timetable"); // maybe add an option to change between timetables for different courses 
@@ -197,9 +199,9 @@ public class ClientView {
                 timetableGrid.add(makeEmptyCell(), d + 1, t + 1);
             }
         }
-        timetableGrid.getColumnConstraints().add(new ColumnConstraints(120));
+        timetableGrid.getColumnConstraints().add(new ColumnConstraints(110));
         for (int d = 0; d < SHORT_DAYS.length; d++) {
-            ColumnConstraints cc = new ColumnConstraints(130);
+            ColumnConstraints cc = new ColumnConstraints(100, 150, Double.MAX_VALUE);
             cc.setHgrow(Priority.ALWAYS);
             timetableGrid.getColumnConstraints().add(cc);
         }

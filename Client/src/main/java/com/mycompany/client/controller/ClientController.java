@@ -84,6 +84,7 @@ public class ClientController {
                 case "ADD": message = "ADD|"+ view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
                 case "REMOVE": message = "REMOVE|" + view.getSelectedModule() + "|" + view.getSelectedDate() + "|" + view.getSelectedTime() + "|" + view.getRoomNumber(); break;
                 case "DISPLAY": message = "DISPLAY" ; break;
+                case "EARLY": message = "EARLY"; break;
                 default: message = "OTHER"; break;
             }
             view.appendResponse("[Sent] " + message);

@@ -5,6 +5,7 @@
 package com.mycompany._24432024_server.controller;
 import com.mycompany._24432024_server.IncorrectActionException;
 import com.mycompany._24432024_server.model.ServerModel;
+import java.util.concurrent.FutureTask;
 /**
  *
  * @author fabia
@@ -60,11 +61,11 @@ public class ServerController {
         return model.getScheduleSerialized();
     }
     private String handleEarly() {
-        EarlyLectureWorker service = new EarlyLectureWorker(model);
-        Thread serviceThread = new Thread(service);
+        FutureTask<String> task = new FutureTask<>(new EarlyLectureWorker(model));
+        Thread serviceThread = new Thread(task);
         serviceThread.start();
         try {
-            return service.get();
+            return task.get();
         } catch (Exception e) {
             return "EARLY|FAILURE: " + e.getMessage();
         }
