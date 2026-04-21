@@ -50,14 +50,21 @@ public class ClientView {
     VBox lectureInputPanel;
 
     private final Stage stage;
-
+    private boolean darkMode = false;
+    private Scene scene;
+    private HBox header;
+    private VBox bottomPanel;
+    
+    private Label titleLabel;
+    private Label gridTitleLabel;
+    private Label logLabel;
+    private Button darkToggleBtn;
+    
     public ClientView(Stage stage) {
         this.stage = stage;
     }
 
     public void start() {
-       
-      
        
         actionBox = new ComboBox<>();
         actionBox.getItems().addAll("ADD", "REMOVE", "DISPLAY", "EARLY", "OTHER");
@@ -118,10 +125,13 @@ public class ClientView {
         
 
         BorderPane border = new BorderPane();
-        Label title = new Label("Lecture Scheduler Client");
-        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        HBox header = new HBox(title);
+        titleLabel = new Label("Lecture Scheduler Client");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        darkToggleBtn = new Button("Dark Mode");
+        darkToggleBtn.setOnAction(e -> toggleDarkMode());
+        header = new HBox(10, titleLabel, darkToggleBtn);
         header.setPadding(new Insets(10));
+        header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color:#f2f2f2");
         
         timetableGrid = new GridPane();
@@ -133,9 +143,9 @@ public class ClientView {
         HBox.setHgrow(timetableGrid, Priority.ALWAYS);
         ScrollPane scrollPane = new ScrollPane(timetableGrid);
         scrollPane.setFitToWidth(true);
-        Label gridTitle = new Label("Weekly Timetable"); // maybe add an option to change between timetables for different courses 
-        gridTitle.setStyle("-fx-font-weight: bold;");
-        VBox centerBox = new VBox(8, gridTitle, scrollPane);
+        gridTitleLabel = new Label("Weekly Timetable"); // maybe add an option to change between timetables for different courses 
+        gridTitleLabel.setStyle("-fx-font-weight: bold;");
+        VBox centerBox = new VBox(8, gridTitleLabel, scrollPane);
         centerBox.setPadding(new Insets(12));
         border.setCenter(centerBox);
         
@@ -145,19 +155,43 @@ public class ClientView {
         leftPanel.setPrefWidth(300);
         leftPanel.setStyle("-fx-border-color:#dddddd; -fx-border-width: 0 1 0 0");
         border.setLeft(leftPanel);
-        VBox bottomPanel = new VBox(6,new Label("Conversation Log Client-Server"),readOnly,statusLabel
-);
-
+        logLabel = new Label("Conversation Log Client-Server");
+        bottomPanel = new VBox(6, logLabel, readOnly, statusLabel);
+        
     bottomPanel.setPadding(new Insets(12));
     bottomPanel.setStyle("-fx-background-color:#fafafa; -fx-border-color:#dddddd; -fx-border-width:1 0 0 0");
 
     border.setBottom(bottomPanel);
         
-        stage.setScene(new Scene(border, 1000, 800));
+        scene = new Scene(border, 1000, 800);
+        stage.setScene(scene);
         stage.setTitle("Lecture Scheduler Client");
         stage.show();
     }
-
+    private void toggleDarkMode() {
+    darkMode = !darkMode;
+    if (darkMode) {
+        scene.getRoot().setStyle("-fx-base: #3c3f41;");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+        gridTitleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
+        logLabel.setStyle("-fx-text-fill: white;");
+        statusLabel.setStyle("-fx-text-fill: white;");
+        darkToggleBtn.setText("Light Mode");
+        header.setStyle("-fx-background-color: #2b2b2b;");
+        bottomPanel.setStyle("-fx-background-color: #2b2b2b; -fx-border-color:#555555; -fx-border-width:1 0 0 0");
+    } else {
+        scene.getRoot().setStyle("");
+        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: black;");
+        gridTitleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black;");
+        logLabel.setStyle("-fx-text-fill: black;");
+        statusLabel.setStyle("-fx-text-fill: black;");
+        darkToggleBtn.setText("Dark Mode");
+        header.setStyle("-fx-background-color: #f2f2f2;");
+        bottomPanel.setStyle("-fx-background-color:#fafafa; -fx-border-color:#dddddd; -fx-border-width:1 0 0 0");
+    }
+    buildEmptyGrid();
+    
+}
    
     public void updateSchedule(String response) {
         buildEmptyGrid();
@@ -211,9 +245,10 @@ public class ClientView {
         }
     }
 
-    private Label makeHeaderCell(String text) {
+     private Label makeHeaderCell(String text) {
         Label lbl = new Label(text);
-        lbl.setStyle("-fx-font-weight: bold; -fx-background-color: #cccccc; -fx-padding: 6;");
+        String bg = darkMode ? "#2b2b2b" : "#3a3a3a";
+        lbl.setStyle("-fx-font-weight: bold; -fx-background-color: " + bg + "; -fx-padding: 6; -fx-text-fill: white;");
         lbl.setMaxWidth(Double.MAX_VALUE);
         lbl.setAlignment(Pos.CENTER);
         lbl.setMinHeight(36);
@@ -222,30 +257,35 @@ public class ClientView {
 
     private Label makeTimeCell(String time) {
         Label lbl = new Label(time);
-        lbl.setStyle("-fx-background-color: #eeeeee; -fx-padding: 4; -fx-font-size: 11px;");
+        String bg = darkMode ? "#45494a" : "#f0f0f0";
+        String fg = darkMode ? "white"   : "#333333";
+        lbl.setStyle("-fx-background-color: " + bg + "; -fx-padding: 4; -fx-font-size: 11px; -fx-text-fill: " + fg + "; -fx-border-color: #555555; -fx-border-width: 0.5;");
         lbl.setMaxWidth(Double.MAX_VALUE);
         lbl.setAlignment(Pos.CENTER);
         lbl.setMinHeight(60);
         return lbl;
     }
 
-    private Label makeEmptyCell() {
+     private Label makeEmptyCell() {
         Label lbl = new Label("");
-        lbl.setStyle("-fx-background-color: white; -fx-border-color: #eeeeee; -fx-border-width: 0.5;");
+        String bg = darkMode ? "#3c3f41" : "#ffffff";
+        lbl.setStyle("-fx-background-color: " + bg + "; -fx-border-color: #555555; -fx-border-width: 0.5;");
         lbl.setMinHeight(60);
         lbl.setMaxWidth(Double.MAX_VALUE);
         return lbl;
     }
 
-    private VBox makeLectureCell(String module, String room) {
+     private VBox makeLectureCell(String module, String room) {
         Label modLbl  = new Label(module);
         modLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
         Label roomLbl = new Label(room);
         roomLbl.setStyle("-fx-font-size: 11px;");
         VBox cell = new VBox(2, modLbl, roomLbl);
         cell.setPadding(new Insets(4, 6, 4, 6));
-        cell.setStyle("-fx-background-color: #d0e8ff; -fx-border-color: #aaaaaa; -fx-border-width: 0.5;");
+        String bg = darkMode ? "#1e4d78" : "#d0e8ff";
+        cell.setStyle("-fx-background-color: " + bg + "; -fx-border-color: #555555; -fx-border-width: 0.5;");
         cell.setMinHeight(60);
+        cell.setMaxWidth(Double.MAX_VALUE);
         return cell;
     }
 
