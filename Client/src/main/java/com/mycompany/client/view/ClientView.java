@@ -14,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.*;
+import javafx.print.PrinterJob;
+
 
 import javafx.geometry.Pos;
 import java.time.DayOfWeek;
@@ -35,6 +37,7 @@ public class ClientView {
     public Button stopBtn;
     public Button clearBtn;
     public Button connectBtn;
+    private Button printBtn;
 
     public TextArea readOnly;
     public Label statusLabel;
@@ -117,8 +120,12 @@ public class ClientView {
         grid.add(actionBox, 1, 0);
 
         grid.add(lectureInputPanel, 0, 1, 2, 1);
-        VBox buttonBox = new VBox(10, connectBtn, sendBtn, clearBtn, stopBtn);
+        printBtn = new Button("Print Timetable");
+        printBtn.setMaxWidth(Double.MAX_VALUE);
+        VBox buttonBox = new VBox(10, connectBtn, sendBtn, clearBtn, stopBtn, printBtn);
         buttonBox.setPadding(new Insets(10,0,0,0));
+        
+        printBtn.setOnAction(e -> printTimetable());
 
         connectBtn.setMaxWidth(Double.MAX_VALUE);
         sendBtn.setMaxWidth(Double.MAX_VALUE);
@@ -161,6 +168,8 @@ public class ClientView {
         logLabel = new Label("Conversation Log Client-Server");
         bottomPanel = new VBox(6, logLabel, readOnly, statusLabel);
         
+        
+        
     bottomPanel.setPadding(new Insets(12));
     bottomPanel.setStyle("-fx-background-color:#fafafa; -fx-border-color:#dddddd; -fx-border-width:1 0 0 0");
 
@@ -171,6 +180,23 @@ public class ClientView {
         stage.setTitle("Lecture Scheduler Client");
         stage.show();
     }
+    
+    private void printTimetable() {
+    PrinterJob job = PrinterJob.createPrinterJob();
+    if (job == null) return;
+    
+    javafx.print.PrinterAttributes attrs = job.getPrinter().getPrinterAttributes();
+    javafx.print.PageLayout pageLayout = job.getPrinter().createPageLayout(
+        attrs.getDefaultPaper(),
+        javafx.print.PageOrientation.LANDSCAPE,
+        javafx.print.Printer.MarginType.DEFAULT
+    );
+    job.getJobSettings().setPageLayout(pageLayout);
+    if (job.showPrintDialog(stage)) {
+        boolean success = job.printPage(pageLayout, timetableGrid);
+        if (success) job.endJob();
+    }
+}
     private void toggleDarkMode() {
     darkMode = !darkMode;
     if (darkMode) {
@@ -195,7 +221,7 @@ public class ClientView {
     buildEmptyGrid();
     
 }
-   
+    
     public void updateSchedule(String response) {
         moduleColourMap.clear();
         buildEmptyGrid();
