@@ -32,28 +32,25 @@ public class ClientHandler implements Runnable {
       
       String message;         
       while((message = in.readLine()) != null ){
-      System.out.println("Message received from client: " + cntrl + "  "+ message);
-        if (message.equalsIgnoreCase("quit")){
-            out.println("Server closed by client: " + cntrl);
-            break;
-        } 
-      out.println("Echo Message: " + message);     
+      System.out.println("Thread : "+ Thread.currentThread().threadId() + " Recieved "+ message);
+     
+      String resp = cntrl.processRequest(message);
+      System.out.println("Thread : " + Thread.currentThread().threadId() +" Sending "+ resp);
+     out.println(resp); 
+      if (resp.startsWith("TERMINATE"))  break;
+         
      }
-    }
-    catch(IOException e) {
-        e.printStackTrace();
-    }
-    finally 
-    {
+    }catch(IOException e){
+        System.out.println("Client ERROR: " + e.getMessage());
+        
+    }finally{
        try {
-	    System.out.println("\n* Closing client connection... *");
             link.close();				    
-	}
-       catch(IOException e)
-       {
-        System.out.println("Unable to disconnect client : " + cntrl );
-	    
+	} catch(IOException e)  {
+           e.printStackTrace();
+            
        }
+       System.out.println("Thread : " + Thread.currentThread().threadId() + " Client connection closed. ");
     }
   } 
 }
