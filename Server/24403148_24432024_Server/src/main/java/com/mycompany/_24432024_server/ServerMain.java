@@ -14,24 +14,16 @@ import java.io.*;
 public class ServerMain {
 
     public static void main(String[] args) {
-        ServerController controller = new ServerController();
+        ServerController cntrl = new ServerController();
         try (ServerSocket servSock = new ServerSocket(1234)) {
             System.out.println("Server Started");
             while (true) {
                 Socket link = servSock.accept();
                 System.out.println("Client connected: " + link.getInetAddress());
-                BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-                PrintWriter out = new PrintWriter(link.getOutputStream(), true);
-                String input;
-                while ((input = in.readLine()) != null) {
-                    System.out.println("Received: " + input);
-                    String response = controller.processRequest(input);
-                    System.out.println("Sending: " + response);
-                    out.println(response);
-                    if (response.startsWith("TERMINATE")) break;
-                }
-                link.close();
-                System.out.println("Client disconnected.");
+                
+                ClientHandler handler = new ClientHandler(link, cntrl);
+                Thread cThrd = new Thread(handler);
+                cThrd.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

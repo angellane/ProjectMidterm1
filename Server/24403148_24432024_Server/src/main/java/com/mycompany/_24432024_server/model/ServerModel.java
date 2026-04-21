@@ -19,7 +19,7 @@ public class ServerModel {
     public String getCourse() {
         return COURSE;
     }
-    public String addLecture(String module, String date, String time, String room) {
+    public synchronized String addLecture(String module, String date, String time, String room) {
         if (!modules.contains(module) && modules.size() >= MAX_MODULES) {
             return "FAILURE: Cannot add lecture. Maximum of " + MAX_MODULES + " modules reached";
         
@@ -43,7 +43,7 @@ public class ServerModel {
         modules.add(module);
         return "SUCCESS: Lecture added";
     }
-    public String removeLecture(String module, String date, String time, String room) {
+    public synchronized String removeLecture(String module, String date, String time, String room) {
         Lecture target = new Lecture(module, date, time, room, COURSE);
         String courseKey = target.getCourseTimeKey();
         if (!courseSched.containsKey(courseKey)) {
@@ -66,7 +66,7 @@ public class ServerModel {
         if (!moduleStillExists) modules.remove(module);
             return "SUCCESS: Lecture removed.";
     }
-    public String getScheduleSerialized() {
+    public synchronized String getScheduleSerialized() {
         if (lectures.isEmpty()) {
             return "SCHEDULE|0|No lectures scheduled for " + COURSE + " yet.";
         }
@@ -76,7 +76,7 @@ public class ServerModel {
         }
         return sb.toString();
     }
-    public List<Lecture> getAllLectures() {
+    public synchronized List<Lecture> getAllLectures() {
         return Collections.unmodifiableList(lectures);
     }
 }
