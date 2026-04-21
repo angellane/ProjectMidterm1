@@ -44,6 +44,9 @@ public class ClientView {
     private static final String[] SHORT_DAYS = {"Mon", "Tues", "Wed", "Thur", "Fri"};
     private static final String[] timeSlots = {"09:00-10:00", "11:00-12:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "16:00-17:00", "17:00-18:00"};
     
+    private static final String[] MODULE_COLOURS = {"#3B82F6", "#F59E0B", "#10B981", "#8B5CF6", "#EF4444"};
+    private final Map<String, String> moduleColourMap = new LinkedHashMap<>();
+
     // maybe add an option to switch from AM/PM time to Military time
     
     
@@ -194,6 +197,7 @@ public class ClientView {
 }
    
     public void updateSchedule(String response) {
+        moduleColourMap.clear();
         buildEmptyGrid();
         if (response == null || !response.startsWith("SCHEDULE|")) return;
         String[] parts = response.split("\\|");
@@ -217,6 +221,14 @@ public class ClientView {
             });
             timetableGrid.add(makeLectureCell(module, room), col, row + 1);
         }
+    }
+
+    private String assignColour(String module) {
+        if (!moduleColourMap.containsKey(module)) {
+            int idx = moduleColourMap.size() % MODULE_COLOURS.length;
+            moduleColourMap.put(module, MODULE_COLOURS[idx]);
+        }
+        return moduleColourMap.get(module);
     }
 
     private void buildEmptyGrid() {
@@ -277,12 +289,12 @@ public class ClientView {
 
      private VBox makeLectureCell(String module, String room) {
         Label modLbl  = new Label(module);
-        modLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+        modLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: white;");
         Label roomLbl = new Label(room);
-        roomLbl.setStyle("-fx-font-size: 11px;");
+        roomLbl.setStyle("-fx-font-size: 11px; -fx-text-fill: white;");
         VBox cell = new VBox(2, modLbl, roomLbl);
         cell.setPadding(new Insets(4, 6, 4, 6));
-        String bg = darkMode ? "#1e4d78" : "#d0e8ff";
+        String bg = assignColour(module);
         cell.setStyle("-fx-background-color: " + bg + "; -fx-border-color: #555555; -fx-border-width: 0.5;");
         cell.setMinHeight(60);
         cell.setMaxWidth(Double.MAX_VALUE);
