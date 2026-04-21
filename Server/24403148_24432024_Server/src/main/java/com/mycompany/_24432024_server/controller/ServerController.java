@@ -5,7 +5,6 @@
 package com.mycompany._24432024_server.controller;
 import com.mycompany._24432024_server.IncorrectActionException;
 import com.mycompany._24432024_server.model.ServerModel;
-
 /**
  *
  * @author fabia
@@ -29,6 +28,8 @@ public class ServerController {
                     return handleRemove(parts);
                 case "DISPLAY":
                     return handleDisplay();
+                case "EARLY":
+                    return handleEarly();
                 case "STOP":
                     return handleStop();
                 default:
@@ -58,10 +59,18 @@ public class ServerController {
     private String handleDisplay() {
         return model.getScheduleSerialized();
     }
+    private String handleEarly() {
+        EarlyLectureWorker service = new EarlyLectureWorker(model);
+        Thread serviceThread = new Thread(service);
+        serviceThread.start();
+        try {
+            return service.get();
+        } catch (Exception e) {
+            return "EARLY|FAILURE: " + e.getMessage();
+        }
+    }
     private String handleStop() {
         System.out.println("STOP received. Closing Connection");
         return "TERMINATE";
     }
 }
-    
-
